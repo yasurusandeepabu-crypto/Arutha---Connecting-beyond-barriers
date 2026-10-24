@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sigml><hns_sign gloss="GOOD">
+    <hamnosys_manual>
+      <hamparbegin />
+      <hamflathand />
+      <hamextfingeru />
+      <hampalmu />
+      <hamplus />
+      <hamnondominant />
+      <hametc />
+      <hamextfingero />
+      <hampalmu />
+      <hamparend />
+      <hamchin />
+      <hamlrat />
+      <hammoved />
+      <hamreplace />
+      <hamextfingero />
+      <hampalmu />
+    </hamnosys_manual>
+  </hns_sign>
+
+  </sigml>

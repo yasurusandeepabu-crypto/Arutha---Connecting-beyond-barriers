@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sigml><hns_sign gloss="FATHER">
+    <hamnosys_manual>
+      <hamflathand />
+      <hamthumboutmod />
+      <hamextfingeru />
+      <hampalmd />
+      <hamforehead />
+      <hamlrbeside />
+      <hamnomotion />
+      <hamrepeatfromstart />
+    </hamnosys_manual>
+  </hns_sign>
+
+  </sigml>

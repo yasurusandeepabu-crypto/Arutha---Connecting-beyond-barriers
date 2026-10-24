@@ -1,0 +1,9 @@
+{
+  "revision": "ce93d533b24740879df1e84cbb5341dfa575fc1f",
+  "sha256": {
+    "American_SL_ASL.sigml": "ed5fe27f9a0ccc407b6a9354115d3185a5ab29a83c77dfb5eaa29a80d067ba98",
+    "American_SL_ASL.sigml.meta.json": "f9a5ad3c93e1a7f781195edaaafa1e685fbb4d89d62397820169dd8e13851f32"
+  },
+  "source": "https://raw.githubusercontent.com/zhan-a/Kozha/ce93d533b24740879df1e84cbb5341dfa575fc1f/data/",
+  "changes": "Original dictionary retained; individual signs extracted without changing notation."
+}

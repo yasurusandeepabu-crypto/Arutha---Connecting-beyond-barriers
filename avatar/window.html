@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SignBridge avatar</title>
+<link rel="stylesheet" href="./player.css">
+<style>body{margin:0;background:#10283b}.signbridge-float{position:static;width:100%;max-width:100%;max-height:none;border:0;border-radius:0;resize:none}.signbridge-float canvas,.signbridge-float video{max-height:65vh}</style>
+<script type="module">
+import { mountFloatingAvatar } from './player.js';
+const { player } = mountFloatingAvatar();
+const openerOrigin = document.referrer ? new URL(document.referrer).origin : location.origin;
+window.addEventListener('message', e => {
+  if (e.source === window.opener && e.origin === openerOrigin && e.data?.type === 'signbridge-stop') player.stop();
+  if (e.source === window.opener && e.origin === openerOrigin && e.data?.type === 'signbridge-plan' &&
+      e.data.plan && Array.isArray(e.data.plan.tokens) && typeof e.data.plan.text === 'string') player.enqueue(e.data.plan);
+});
+window.opener?.postMessage({ type: 'signbridge-ready' }, openerOrigin);
+</script>
+</html>

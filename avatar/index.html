@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SignBridge · text to recorded signs</title>
+<link rel="stylesheet" href="./player.css">
+<style>
+body{font:18px/1.6 system-ui,sans-serif;background:#f1f7f8;color:#173747;margin:0;padding:5vw}main{max-width:650px;margin-right:340px}h1{font-size:48px;line-height:1.1}label{display:block;font-weight:650}textarea{box-sizing:border-box;width:100%;padding:16px;font:inherit;border:1px solid #628594;border-radius:12px}button{font:inherit;padding:10px 20px;border:0;border-radius:9px;background:#145e66;color:white;margin-top:12px;cursor:pointer}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#e1ecef;padding:16px;border-radius:12px}small{display:block}@media(max-width:850px){main{margin:0;padding-bottom:650px}}
+</style>
+<main>
+<p>HACK FOR HUMANITY · COLOMBO</p>
+<h1>Speech deserves<br>a visual bridge.</h1>
+<p>English meaning → checked SLSL construction → your team’s recorded motion.</p>
+<p><a href="/live.html"><strong>Open live YouTube tab-audio interpretation →</strong></a></p>
+<form id="form"><label for="text">English transcript</label><textarea id="text" rows="3" maxlength="2000">Hello everyone, nice to meet you. My name is Julie Anderson.</textarea><button id="play">Plan &amp; play</button></form>
+<p id="message" role="status">No API key needed. Drag the avatar by its header.</p>
+<button id="popout" type="button">Open separate avatar window</button>
+<pre id="plan">Your playback plan will appear here.</pre>
+<small>Proof of concept. No recordings are bundled. Missing letters appear as text, not fingerspelling. Record and verify signs before demonstrating comprehension.</small>
+<p><a href="/capture.html">Capture signs directly into our avatar</a> · <a href="/record.html">Optional video recorder</a></p>
+</main>
+<script type="module">
+import { mountFloatingAvatar, openAvatarWindow } from './player.js';
+const { player } = mountFloatingAvatar();
+let floatingWindow;
+document.querySelector('#popout').onclick = () => {
+  try { floatingWindow?.close(); floatingWindow = openAvatarWindow(); }
+  catch (error) { document.querySelector('#message').textContent = error.message; }
+};
+document.querySelector('#form').onsubmit = async e => {
+  e.preventDefault();
+  const button = document.querySelector('#play');
+  button.disabled = true;
+  try {
+    const response = await fetch('/api/gloss', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:document.querySelector('#text').value})});
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error);
+    document.querySelector('#plan').textContent = JSON.stringify({frames:data.frames,tokens:data.tokens,flags:data.flags}, null, 2);
+    document.querySelector('#message').textContent = `${data.review_status} · ${data.gloss_ms} ms · ${data.flags.map(f => f.kind).join(', ')}`;
+    player.enqueue(data);
+    if (floatingWindow) {
+      try { floatingWindow.enqueue(data); }
+      catch { floatingWindow = null; }
+    }
+  } catch (error) { document.querySelector('#message').textContent = error.message; }
+  finally { button.disabled = false; }
+};
+</script>
+</html>

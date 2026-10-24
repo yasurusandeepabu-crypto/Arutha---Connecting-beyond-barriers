@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SignBridge · floating interpreter</title>
+<link rel="stylesheet" href="./player.css"><link rel="stylesheet" href="./live.css">
+<main class="shell">
+<nav class="topbar" aria-label="SignBridge"><span class="brand"><span class="brand-mark">SB</span>SignBridge</span><span class="tag">English audio · ASL demo</span></nav>
+<header class="hero"><p class="eyebrow">A visual bridge to spoken content</p><h1>Keep signing<br>in view.</h1><p class="intro">Watch your video while the avatar stays in a small floating window. Live captions keep the original words visible.</p><ol class="steps"><li><b>01</b> Get ready</li><li><b>02</b> Open the avatar</li><li><b>03</b> Share your video tab</li></ol></header>
+<section class="card" aria-label="Session controls">
+<div class="actions"><button id="prepare">Load speech engine</button><button id="popout" class="primary">Open floating avatar</button><button id="start" disabled>Share YouTube tab audio</button><button id="stop" disabled>Stop capture</button></div>
+<p id="status" class="status" role="status">Checking local speech service…</p>
+<p id="window-status" class="window-note">Desktop Chrome can keep the avatar above YouTube and other windows. Keep this SignBridge tab open.</p>
+</section>
+<section class="card"><div class="section-head"><h2>Live captions</h2><button id="clear" class="quiet">Clear playback</button></div><div id="captions" class="caption-text" aria-live="polite"></div><p id="review-status" class="review-line" role="status">ASL word-sign preview; not a full sentence translation.</p></section>
+<details class="tools"><summary>Team tools &amp; demo setup</summary>
+<div class="tool-links"><a href="/capture.html">Capture sign movements</a><a href="/record.html">Record a clip</a><a href="/index.html">Text planner</a></div>
+<input id="preview-unverified" type="checkbox" hidden><small>The ASL preview always shows an unverified-signing warning.</small>
+<section class="card"><h2>Signing coverage</h2><p id="coverage-status">14 unverified ASL word signs, rendered by UEA CWASA. Unsupported words stay in captions.</p><p id="unsupported" role="status"></p><pre id="tokens">No clips queued.</pre><ul id="coverage"></ul></section>
+<section class="card"><h2>Translation checks</h2><small id="latency"></small><ul id="translation-flags"></ul><details><summary>Meaning frames and playback plan</summary><pre id="translation-report">No analysis yet.</pre></details></section>
+<details><summary>No-key text test</summary><form id="text-form"><label for="text">English transcript</label><textarea id="text" maxlength="2000">Hello. Thank you. Yes. No. Mother. Father. Eat. Good. Name. Want. Finish. House. Learn. Help.</textarea><button id="text-play">Interpret text</button></form><p>This tests translation and playback without capturing audio. Open the floating avatar to see available clips.</p></details>
+</details>
+<footer>Small-vocabulary ASL word-sign proof of concept, not a full translator. Signing needs Deaf-native review. Avatar: UEA CWASA; dictionary: Kozha, CC BY-NC 4.0. Internet required for avatar. Audio is processed locally and is not saved. Chrome still asks you to choose a tab and enable <strong>Share tab audio</strong>. Closing the avatar stops listening.</footer>
+</main>
+<script type="module" src="./live.js"></script>
+</html>

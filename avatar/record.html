@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SignBridge · team recordings</title>
+<style>body{font:18px/1.6 system-ui;max-width:780px;margin:40px auto;padding:20px;background:#10283b;color:white}video{width:100%;max-height:55vh;background:#000}button,input{font:inherit;padding:10px;margin:8px 4px;border-radius:8px}a{color:#a0efe1}</style>
+<h1>Record your team’s signs</h1>
+<p>Use one signer, a plain background and good light. Include head, shoulders, elbows and every fingertip. Keep the camera still. This preview and saved video are unmirrored.</p>
+<label>Sign or letter <input id="gloss" value="HELLO" maxlength="32" pattern="[A-Za-z-]+"></label>
+<video id="preview" autoplay muted playsinline></video>
+<div><button id="camera">Enable camera</button><button id="record" disabled>Record</button><button id="stop" disabled>Stop &amp; save</button><button id="off" disabled>Camera off</button></div>
+<p id="status" role="status">Camera access requires localhost or HTTPS. Audio is not recorded. Files stay in your browser until downloaded.</p>
+<a href="/">Back to player</a>
+<script type="module">
+const $ = id => document.getElementById(id);
+let stream, recorder, chunks = [];
+$('camera').onclick = async () => {
+  try {
+    stream?.getTracks().forEach(t => t.stop());
+    stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 }, audio: false });
+    $('preview').srcObject = stream;
+    $('record').disabled = false; $('off').disabled = false; $('camera').disabled = true;
+    $('status').textContent = 'Camera ready. Trim pauses: aim for 1–3 seconds per sign.';
+  } catch (e) { $('status').textContent = e.message; }
+};
+$('record').onclick = () => {
+  const label = $('gloss').value.toUpperCase().replace(/[^A-Z-]/g, '');
+  if (!label) { $('status').textContent = 'Enter a sign label first.'; return; }
+  try {
+    const type = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'].find(t => MediaRecorder.isTypeSupported(t));
+    if (!type) throw new Error('Use desktop Chrome to record WebM.');
+    recorder = new MediaRecorder(stream, { mimeType: type }); chunks = [];
+    recorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+    recorder.onstop = () => {
+      const url = URL.createObjectURL(new Blob(chunks, { type }));
+      const link = document.createElement('a'); link.href = url; link.download = `${label}.webm`; link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      $('record').disabled = !stream?.active; $('stop').disabled = true;
+      $('status').textContent = `Saved ${label}.webm. Review the sign before adding it to the manifest.`;
+    };
+    recorder.start(); $('record').disabled = true; $('stop').disabled = false;
+    $('status').textContent = `Recording ${label}…`;
+  } catch (e) { $('status').textContent = e.message; }
+};
+$('stop').onclick = () => { if (recorder?.state === 'recording') recorder.stop(); };
+$('off').onclick = () => {
+  if (recorder?.state === 'recording') recorder.stop();
+  stream?.getTracks().forEach(t => t.stop());
+  $('record').disabled = true; $('off').disabled = true; $('camera').disabled = false;
+};
+window.addEventListener('pagehide', () => stream?.getTracks().forEach(t => t.stop()));
+</script>
+</html>

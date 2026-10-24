@@ -1,0 +1,12 @@
+[
+  {"id":"GREETING","meaning":"Hello everyone, nice to meet you.","variants":["hello everyone nice to meet you","hi everyone nice to meet you","hello everybody nice to meet you"]},
+  {"id":"INTRODUCTION","meaning":"Let me introduce myself.","variants":["let me introduce myself","i will introduce myself","i'll introduce myself"]},
+  {"id":"NAME-JULIE-ANDERSON","meaning":"My name is Julie Anderson.","variants":["my name is julie anderson","my name's julie anderson","i am julie anderson","i'm julie anderson"]},
+  {"id":"AGE-NINE","meaning":"I'm nine years old.","variants":["i'm nine years old","i am nine years old","i'm 9 years old","i am 9 years old"]},
+  {"id":"FROM-SOUTH-AFRICA","meaning":"I'm from South Africa.","variants":["i'm from south africa","i am from south africa","i come from south africa"]},
+  {"id":"LIKE-PANCAKES-HOT-DOGS","meaning":"I like pancakes and hot dogs.","variants":["i like pancakes and hot dogs","i like pancakes and hotdogs"]},
+  {"id":"LIKE-YELLOW","meaning":"I like yellow.","variants":["i like yellow"]},
+  {"id":"LIKE-CATS","meaning":"I like cats.","variants":["i like cats"]},
+  {"id":"MORE-ABOUT-ME","meaning":"Now you know more about me.","variants":["now you know more about me"]},
+  {"id":"HOPE-FRIENDS","meaning":"I hope we can be friends.","variants":["i hope we can be friends","i hope that we can be friends"]}
+]

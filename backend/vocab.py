@@ -1,0 +1,5 @@
+SIGNS = (
+    "HELLO", "MY", "NAME", "YOU", "I", "THANK-YOU", "PLEASE", "YES", "NO",
+    "COME", "SIT", "LISTEN", "WRITE", "HELP", "UNDERSTAND", "WHAT",
+)
+MAX_TOKENS = 25

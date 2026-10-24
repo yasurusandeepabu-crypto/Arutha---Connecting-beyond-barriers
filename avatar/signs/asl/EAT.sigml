@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sigml><hns_sign gloss="EAT">
+    <hamnosys_manual>
+      <hampinchall />
+      <hamfingerbendmod />
+      <hamextfingeri />
+      <hampalmd />
+      <hamlips />
+      <hamlrat />
+      <hammovei />
+      <hamsmallmod />
+      <hamtouch />
+      <hamrepeatfromstart />
+    </hamnosys_manual>
+  </hns_sign>
+
+  </sigml>

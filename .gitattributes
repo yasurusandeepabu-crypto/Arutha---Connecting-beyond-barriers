@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.png -text
+*.jpeg -text
+*.webm -text
+avatar/signs/asl/American_SL_ASL.sigml -text
+avatar/signs/asl/American_SL_ASL.sigml.meta.json -text

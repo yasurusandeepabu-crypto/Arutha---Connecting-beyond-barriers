@@ -1,0 +1,16 @@
+{
+  "language": "SLSL",
+  "version": 1,
+  "constructions": [
+    {"id":"GREETING","frame":{"predicate":"greeting","agent":"speaker","patient":"everyone","slots":{}},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]},
+    {"id":"INTRODUCTION","frame":{"predicate":"self_introduction","agent":"speaker","patient":"speaker","slots":{}},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]},
+    {"id":"NAME-JULIE-ANDERSON","frame":{"predicate":"name","agent":"speaker","patient":null,"slots":{"name":"julie anderson"}},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]},
+    {"id":"AGE-NINE","frame":{"predicate":"age","agent":"speaker","patient":null,"slots":{"age":"9"}},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]},
+    {"id":"FROM-SOUTH-AFRICA","frame":{"predicate":"origin","agent":"speaker","patient":null,"slots":{"place":"south africa"}},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]},
+    {"id":"LIKE-PANCAKES-HOT-DOGS","frame":{"predicate":"like","agent":"speaker","patient":"pancakes and hot dogs","slots":{}},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]},
+    {"id":"LIKE-YELLOW","frame":{"predicate":"like","agent":"speaker","patient":"yellow","slots":{}},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]},
+    {"id":"LIKE-CATS","frame":{"predicate":"like","agent":"speaker","patient":"cats","slots":{}},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]},
+    {"id":"MORE-ABOUT-ME","frame":{"predicate":"listener_knows_more","agent":"addressee","patient":"speaker","slots":{},"time_anchor":"now"},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]},
+    {"id":"HOPE-FRIENDS","frame":{"predicate":"hope_friendship","agent":"speaker","patient":"speaker_and_addressee","slots":{},"modality":"CAN"},"status":"PENDING","provenance":{"reviewers":[],"reviewed_at":null,"source":null},"gloss_sequence":[]}
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "language": "American Sign Language \u00b7 unverified lexical prototype",
+  "language_code": "ASL",
+  "renderer": "cwasa",
+  "signs": {
+    "HELLO": {
+      "sigml": "asl/HELLO.sigml",
+      "reviewed": false
+    },
+    "THANK-YOU": {
+      "sigml": "asl/THANK-YOU.sigml",
+      "reviewed": false
+    },
+    "YES": {
+      "sigml": "asl/YES.sigml",
+      "reviewed": false
+    },
+    "NO": {
+      "sigml": "asl/NO.sigml",
+      "reviewed": false
+    },
+    "MOTHER": {
+      "sigml": "asl/MOTHER.sigml",
+      "reviewed": false
+    },
+    "FATHER": {
+      "sigml": "asl/FATHER.sigml",
+      "reviewed": false
+    },
+    "EAT": {
+      "sigml": "asl/EAT.sigml",
+      "reviewed": false
+    },
+    "GOOD": {
+      "sigml": "asl/GOOD.sigml",
+      "reviewed": false
+    },
+    "NAME": {
+      "sigml": "asl/NAME.sigml",
+      "reviewed": false
+    },
+    "WANT": {
+      "sigml": "asl/WANT.sigml",
+      "reviewed": false
+    },
+    "FINISH": {
+      "sigml": "asl/FINISH.sigml",
+      "reviewed": false
+    },
+    "HOUSE": {
+      "sigml": "asl/HOUSE.sigml",
+      "reviewed": false
+    },
+    "LEARN": {
+      "sigml": "asl/LEARN.sigml",
+      "reviewed": false
+    },
+    "HELP": {
+      "sigml": "asl/HELP.sigml",
+      "reviewed": false
+    }
+  },
+  "letters": {},
+  "phrases": {},
+  "source": "https://github.com/zhan-a/Kozha/tree/ce93d533b24740879df1e84cbb5341dfa575fc1f",
+  "data_license": "CC BY-NC 4.0, as stated in upstream metadata",
+  "deaf_native_reviewed": false
+}

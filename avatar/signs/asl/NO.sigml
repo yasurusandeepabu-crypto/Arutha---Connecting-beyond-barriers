@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sigml><hns_sign gloss="NO">
+    <hamnosys_manual>
+      <hamfinger23 />
+      <hamextfingero />
+      <hampalmd />
+      <hamneutralspace />
+      <hamnomotion />
+      <hamreplace />
+      <hampinch12 />
+    </hamnosys_manual>
+  </hns_sign>
+
+  </sigml>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sigml><hns_sign gloss="LEARN">
+    <hamnosys_manual>
+      <hampinchall />
+      <hamfingerbendmod />
+      <hamextfingerd />
+      <hampalmd />
+      <hamneutralspace />
+      <hammoveu />
+    </hamnosys_manual>
+  </hns_sign>
+
+  </sigml>

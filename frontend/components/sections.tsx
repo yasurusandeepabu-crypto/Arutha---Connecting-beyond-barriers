@@ -1,0 +1,78 @@
+'use client';
+
+import Image from 'next/image';
+import { useEffect, useState, type FormEvent } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { Accessibility, Activity, ArrowDownToLine, ArrowRight, AudioLines, Check, CircleHelp, Code2, Combine, Hand, Languages, LockKeyhole, Mail, Menu, MonitorPlay, PlayCircle, Plus, SlidersHorizontal, Sparkles, UserRound, X } from 'lucide-react';
+import { useCompanion } from './companion-provider';
+
+const avatar = '/images/avatar_image.png';
+const fade = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: .55, ease: 'easeOut' as const } } };
+
+function Eyebrow({ children }: { children: React.ReactNode }) { return <p className="eyebrow">{children}</p>; }
+function requestCompanion(event: { preventDefault(): void }) { event.preventDefault(); window.dispatchEvent(new Event('open-companion')); }
+function OpenButton({ className = '' }: { className?: string }) { return <a className={`button button-blue ${className}`} href="#session" onClick={requestCompanion}>Open Your Signing Companion</a>; }
+
+export function Navbar() {
+  const [active, setActive] = useState(''); const [scrolled, setScrolled] = useState(false); const [menu, setMenu] = useState(false);
+  useEffect(() => {
+    const onScroll = () => { setScrolled(window.scrollY > 12); if (window.scrollY < 300) setActive(''); }; window.addEventListener('scroll', onScroll, { passive: true });
+    const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); }), { rootMargin: '-30% 0px -60% 0px' });
+    ['pipeline', 'trust', 'about'].forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+    return () => { window.removeEventListener('scroll', onScroll); observer.disconnect(); };
+  }, []);
+  const links = [['How it works', '#pipeline'], ['Accessibility & Trust', '#trust'], ['About & Research', '#about']];
+  return <header className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}><div className="nav-inner"><a className="brand" href="#hero" aria-label="SignBridge home"><span className="site-logo"><Image src="/images/signbridge.jpeg" alt="" width={110} height={73} priority/></span>SignBridge <span>Prototype</span></a><nav className={menu ? 'nav-links nav-open' : 'nav-links'}>{links.map(([label, href]) => <a key={href} className={active === href.slice(1) ? 'active' : ''} href={href} onClick={() => setMenu(false)}>{label}</a>)}</nav><div className="nav-actions"><a className="button button-salmon" href="#session" onClick={requestCompanion}>Open Your Signing Companion</a><a href="#join" className="user-button" aria-label="Share prototype feedback"><UserRound size={15} /></a><button className="menu-toggle" aria-label={menu ? 'Close navigation menu' : 'Open navigation menu'} onClick={() => setMenu(!menu)}>{menu ? <X /> : <Menu />}</button></div></div></header>;
+}
+
+function PipWindow() {
+  const session = useCompanion();
+  const [expanded, setExpanded] = useState(true); const reduce = useReducedMotion();
+  useEffect(() => { const open = () => setExpanded(true); const key = (e: KeyboardEvent) => { if (e.key === 'Escape') setExpanded(false); }; window.addEventListener('open-companion', open); window.addEventListener('keydown', key); return () => { window.removeEventListener('open-companion', open); window.removeEventListener('keydown', key); }; }, []);
+  return <div className="pip-stage" id="hero-pip"><div className="desktop-window"><div className="window-bar"><i className="dot red"/><i className="dot amber"/><i className="dot blue"/><span><span className="tiny-square"/> Research Workspace — Bioinformatics</span><span className="window-actions">−　□</span></div><div className="window-body"><div className="window-sidebar"><div className="skeleton short"/><div className="skeleton"/><div className="skeleton"/><div className="skeleton small"/><div className="skeleton"/><div className="skeleton short"/></div><div className="window-content"><div className="skeleton heading"/><div className="skeleton"/><div className="skeleton"/><div className="skeleton half"/><div className="content-panel"><div className="skeleton short"/><div className="skeleton"/><div className="skeleton half"/></div></div></div></div>
+    <AnimatePresence mode="wait">{expanded ? <motion.div key="pip" className="pip-card" initial={{ opacity: 0, scale: .92, x: 12 }} animate={{ opacity: 1, scale: 1, x: 0 }} exit={{ opacity: 0, scale: .8 }} transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 220, damping: 22 }}><span className="realtime"><i/>Avatar concept</span><Image className="pip-avatar" src={avatar} alt="Concept illustration of the companion; live signing opens in a separate window" fill sizes="(max-width: 700px) 65vw, 300px" priority/><div className="transcript"><div><span>TRANSCRIPT BUFFER</span><AudioLines size={14} /></div><em>{session.caption || 'Your shared video’s captions will appear here.'}</em></div><button className="collapse-pip" aria-label="Collapse signing companion" onClick={() => setExpanded(false)}>⌄</button></motion.div> : <motion.button key="collapsed" className="pip-collapsed" aria-label="Expand signing companion" onClick={() => setExpanded(true)} initial={{ scale: .7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: .7, opacity: 0 }}><Image src={avatar} alt="" width={52} height={52}/><span className="live-dot"/></motion.button>}</AnimatePresence>
+  </div>;
+}
+
+export function Hero() { return <section className="hero steel-section" id="hero"><div className="container hero-grid"><motion.div className="hero-copy" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: .12 } } }}><motion.div variants={fade}><span className="hero-badge"><i/> A NEW KIND OF DIGITAL ACCESSIBILITY</span></motion.div><motion.h1 variants={fade}>A world that speaks.<br/><span>A screen that signs.</span></motion.h1><motion.p className="hero-lede" variants={fade}>Meet a floating companion that pairs live English captions with a 3D avatar showing supported ASL word signs, while you stay with your video.</motion.p><motion.div className="hero-buttons" variants={fade}><OpenButton/><a className="button button-dark" href="#pipeline"><PlayCircle size={16}/> See how it works</a></motion.div><motion.p className="hero-note" variants={fade}><CircleHelp size={14}/> 14-sign ASL prototype. Signing is unverified; captions stay available.</motion.p></motion.div><motion.div className="hero-visual" initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .8, delay: .25 }}><PipWindow/></motion.div></div></section>; }
+
+const capabilities = [
+  { icon: MonitorPlay, title: 'Floating companion', text: 'A compact window designed to remain accessible while you work across any productivity suite, code editor, or browser.' },
+  { icon: Plus, title: 'Picture in Picture (PiP) Interface', text: 'Open an always-on-top companion in desktop Chrome. Move or resize the window, and close it when you are finished.' },
+  { icon: Languages, title: 'Sign-language translation', text: 'Supported English words select 14 ASL SiGML animations. Uncovered words remain in captions; sentence grammar is not generated.' },
+  { icon: SlidersHorizontal, title: 'Personalisation', text: 'Move and resize the companion to suit your workspace. Keep English captions nearby while the ASL word-sign preview plays.' },
+];
+export function Capabilities() { return <section className="section dark-section capabilities" id="capabilities"><div className="container"><Eyebrow>CORE CAPABILITIES</Eyebrow><h2>Built for real daily workflows.</h2><div className="cap-grid">{capabilities.map(({ icon: Icon, title, text }, i) => <motion.article className="cap-card" key={title} variants={fade} initial="hidden" whileInView="show" viewport={{ once: true, amount: .2 }} transition={{ delay: i * .08 }}><div className="icon-tile"><Icon size={17}/></div><h3>{title}</h3><p>{text}</p></motion.article>)}</div></div></section>; }
+
+const steps = [
+  { icon: Sparkles, title: 'Capture', text: 'Share a browser tab with audio enabled. English speech is transcribed locally on this laptop, without a private API key.' },
+  { icon: Combine, title: 'Translate', text: 'Match supported words to the ASL dictionary. Unsupported words stay in captions; negated or conditional sentences are caption only.' },
+  { icon: Hand, title: 'Sign', text: 'Queue SiGML animations on UEA’s CWASA Anna avatar in the floating window. The engine needs internet; no private key is required.' },
+];
+export function Pipeline() { return <section className="section steel-section pipeline" id="pipeline"><div className="container"><div className="section-heading"><Eyebrow>THE PIPELINE</Eyebrow><h2>From information to signing.</h2><p>A limited ASL word-sign preview. Full translation requires the grammar and<br className="desktop-break"/> spatial syntax of natural sign languages.</p></div><div className="steps-grid">{steps.map(({ icon: Icon, title, text }, i) => <motion.article key={title} className="step-card" variants={fade} initial="hidden" whileInView="show" viewport={{ once: true, amount: .2 }} transition={{ delay: i * .12 }}><div className="step-top"><span>STEP 0{i + 1}</span><div className="step-icon"><Icon size={17}/></div></div><h3>{title}</h3><p>{text}</p></motion.article>)}</div></div></section>; }
+
+export function Trust() { return <section className="trust-block dark-section" id="trust"><div className="container"><div className="trust-grid"><div className="trust-copy"><Eyebrow>ACCESSIBILITY &amp; TRUST</Eyebrow><h2>Signing is more than hand movements.</h2><blockquote>“Clear handshapes, movement, facial expressions, and body language all matter. We're designing with the goal of making the signed output understandable, useful, and respectful of the target sign language.”</blockquote></div><div className="trust-visual"><Image src={avatar} alt="Illustrative avatar concept, not a verified signing example" fill sizes="(max-width: 760px) 90vw, 500px"/><div className="trust-caption"><Eyebrow>BIOMECHANICAL FIDELITY</Eyebrow><h3>Non-Manual Markers (NMMs)</h3><p>Facial grammar is essential. Our ASL word-sign prototype does not generate sentence-level facial grammar. Its animations still need fluent ASL review.</p></div></div></div></div></section>; }
+
+export function DemoStrip() { return <section className="demo-strip dark-section" id="demo"><div className="container demo-row"><div><Eyebrow>DESKTOP PIP INTERFACE</Eyebrow><h2>Your workspace. Your signing companion.</h2><p>A movable, resizable floating window designed to stay comfortably within peripheral view<br className="desktop-break"/> while you focus on what matters most.</p></div><OpenButton/></div></section>; }
+
+export function Join() {
+  const [feedback, setFeedback] = useState('');
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState('');
+  function submit(event: FormEvent) {
+    event.preventDefault();
+    if (feedback.trim().length < 5) { setError('Please add a little more detail.'); return; }
+    const file = new Blob([JSON.stringify({project:'SignBridge',feedback:feedback.trim(),created_at:new Date().toISOString()},null,2)],{type:'application/json'});
+    const url = URL.createObjectURL(file);
+    const link = document.createElement('a'); link.href = url; link.download = 'signbridge-feedback.json'; link.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    setSaved(true); setError('');
+  }
+  return <section className="join-section steel-section" id="join"><motion.div className="join-card" initial="hidden" whileInView="show" viewport={{once:true}} variants={fade}><span className="join-pill">FEEDBACK &amp; CO-DESIGN</span><h2>Help us make digital<br/> experiences more accessible.</h2><p>Try the companion and tell us what could work better.<br className="desktop-break"/> Download your feedback to share with the team; nothing is sent automatically.</p><form className="join-form" onSubmit={submit} noValidate><label className="email-field"><Mail size={15}/><span className="sr-only">Prototype feedback</span><input type="text" value={feedback} maxLength={2000} onChange={event=>{setFeedback(event.target.value);setSaved(false);setError('');}} placeholder="Tell us what could work better" aria-invalid={!!error}/></label><button className="button button-blue" type="submit">{saved ? <><Check size={16}/> Downloaded</> : 'Download feedback'}</button></form>{error && <p className="form-error" role="alert">{error}</p>}<div className="join-meta"><span><LockKeyhole size={12}/> Saved on your device. No signup required.</span><b>•</b><a href="#hero" onClick={requestCompanion}>Try the companion <ArrowRight size={12}/></a></div></motion.div></section>;
+}
+
+const footerCols = [
+  { heading: 'TECHNOLOGY', links: ['Picture-in-Picture Stage', 'Translation checks', 'Supported phrases', 'Live captions'] },
+  { heading: 'DEAF COMMUNITY', links: ['Signer review', 'Respectful design', 'Accessibility Standards', 'Prototype limitations'] },
+];
+export function Footer() { return <footer className="footer dark-section" id="about"><div className="container"><div className="footer-grid"><div className="footer-about"><a className="brand" href="#hero" aria-label="SignBridge home"><span className="site-logo"><Image src="/images/signbridge.jpeg" alt="" width={110} height={73}/></span>SignBridge</a><p>An English tab-audio and ASL word-sign prototype, using UEA CWASA and Kozha’s small SiGML dictionary. SLSL remains a future goal.</p><small id="privacy">Audio is processed locally and is not saved. The avatar engine loads from UEA. Proof of concept: 14 ASL signs without Deaf-native review, variable delay, and limited grammar and facial expression. This is not a full ASL or SLSL translator.</small></div>{footerCols.map(col => <div className="footer-col" key={col.heading}><Eyebrow>{col.heading}</Eyebrow>{col.links.map(link => <a key={link} href={col.heading === 'TECHNOLOGY' ? '#pipeline' : '#trust'}>{link}</a>)}</div>)}<div className="footer-col participate"><Eyebrow>PARTICIPATE</Eyebrow><p>Help shape the companion by sharing feedback with the team.</p><a className="beta-link" href="#join" onClick={() => document.querySelector<HTMLInputElement>('.email-field input')?.focus()}>↗ Share feedback</a></div></div><div className="footer-bottom"><span>© 2026 SignBridge team · MIT-licensed project code.</span><div><a href="#privacy">Privacy</a><a href="#trust">Prototype limitations</a><a href="#pipeline">How it works</a></div></div></div></footer>; }

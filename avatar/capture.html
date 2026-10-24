@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SignBridge · live motion capture</title>
+<style>
+:root{color-scheme:dark}body{font:17px/1.5 system-ui,sans-serif;background:#0b1c29;color:#edf7fa;margin:0;padding:28px}main{max-width:1100px;margin:auto}h1{margin:6px 0;font-size:36px}.intro{max-width:800px;color:#b9cfdc}.views{display:grid;grid-template-columns:1fr 1fr;gap:18px}.view{background:#10283b;border:1px solid #365669;border-radius:16px;overflow:hidden}.view h2{font-size:17px;margin:12px 18px}.view video,.view canvas{width:100%;height:360px;object-fit:contain;display:block;background:#10283b}button,input,select{font:inherit;border:1px solid #608595;border-radius:8px;padding:10px;margin:5px 3px}button{background:#a0efe1;color:#10283b;cursor:pointer;font-weight:600}button:disabled{opacity:.4;cursor:default}label{display:inline-block}input{width:140px}a{color:#a0efe1}.controls{padding:18px 0}.quality{min-height:1.5em;color:#a0efe1}li{margin:10px 0}.library button{padding:5px 12px;font-size:14px}[hidden]{display:none!important}.notice{color:#f4d39f}@media(max-width:650px){body{padding:16px}.views{grid-template-columns:1fr}.view video,.view canvas{height:280px}}
+</style>
+<main>
+<a href="/">← Text-to-sign player</a>
+<h1>Your movement. Our avatar.</h1>
+<p class="intro">Record a few SLSL signs with your own hands. MediaPipe tracks points locally; our code draws and replays them. No video upload or model training.</p>
+<div class="views"><section class="view"><h2>Camera · unmirrored</h2><video id="camera" muted playsinline autoplay></video></section><section class="view"><h2>Our avatar · live preview</h2><canvas id="avatar" width="560" height="480" aria-label="Live tracked avatar"></canvas><video id="playback" hidden muted playsinline></video></section></div>
+<p id="quality" class="quality" role="status">Camera is off.</p><p id="avatar-status" hidden></p><p id="caption" hidden></p>
+<div class="controls">
+<div><button id="start">Start camera &amp; tracking</button><button id="off" disabled>Camera off</button></div>
+<label>Type <select id="type"><option value="sign">Sign</option><option value="letter">Letter</option></select></label>
+<label>Label <input id="label" value="HELLO" maxlength="32" autocomplete="off"></label>
+<button id="record" disabled>Capture movement</button><button id="stop" disabled>Finish capture</button>
+<div><button id="review" disabled>Replay last capture</button><button id="save" disabled>Save to local library</button><button id="download" disabled>Download motion JSON</button><button id="live" disabled>Resume live preview</button></div>
+</div>
+<p id="message" role="status">Keep your head, elbows, wrists and fingertips in view. Start with one short sign; review its handshape before recording more.</p>
+<p class="notice">This 2D prototype loses depth and facial expression. Captured movement is not automatically verified as correct SLSL. Review against your trusted reference.</p>
+<h2>Local SLSL library</h2><p>Saved only in this browser on this address. Download JSON to share with your teammate or keep a backup.</p><ul id="library" class="library"></ul>
+<label>Import your team’s motion JSON <input id="import" type="file" accept=".json,application/json"></label>
+</main>
+<script type="module" src="./capture.js"></script>
+</html>
